@@ -17,10 +17,36 @@ try {
         console.log(
             `Response: ${response.status} ${response.statusText}`
             );
-        return response.text();
-  })
-  .then(text => console.log(text))
-  .catch(err => console.error(err));
+            return response.text();
+        })
+        .then(text => console.log(text))
+        .catch(err => console.error(err));
+
+    // create list
+    fetch(`https://api.trello.com/1/lists?key=${trello_key}&token=${trello_token}&name={issues}&idBoard=${board_id}`, {
+        method: 'POST'
+    })
+    .then(response => {
+        console.log(
+            `Response: ${response.status} ${response.statusText}`
+            );
+            return response.text();
+        })
+        .then(text => console.log(text))
+        .catch(err => console.error(err));
+
+    // adding issue to the issue list
+    fetch(`https://api.trello.com/1/cards?key=${trello_key}&token=${trello_token}&idList=${list_id}`, {
+        method: 'POST'
+    })
+    .then(response => {
+        console.log(
+            `Response: ${response.status} ${response.statusText}`
+            );
+            return response.text();
+        })
+        .then(text => console.log(text))
+        .catch(err => console.error(err));
 
 } catch (error) {
   core.setFailed(error.message);
