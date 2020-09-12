@@ -24,6 +24,7 @@ const main = async () => {
             const board_id = await get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
             console.log(`printing ${board_id}`)
         }
+        f()
         // if (!board_id) {
         //     create_board.createBoard(trello_key, trello_token, repo_name)
         //     board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
