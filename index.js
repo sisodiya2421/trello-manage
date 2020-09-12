@@ -23,7 +23,7 @@ const main = async () => {
         var list_id = null
 
         // check if board is present
-        board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token);
+        board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
         if (!board_id) {
             create_board.createBoard(trello_key, trello_token, repo_name)
         }
