@@ -18,19 +18,16 @@ const main = async () => {
         const trello_key = process.env.TRELLO_KEY
         const trello_token = process.env.TRELLO_TOKEN
         const trello_username = process.env.TRELLO_USERNAME
-        
-        var board_id = ''
-        var list_id = ''
 
         // check if board is present
-        board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
+        let board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
         if (!board_id) {
             create_board.createBoard(trello_key, trello_token, repo_name)
             board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
         }
         
         // check if issues list is present or not
-        list_id = get_list_Id.getListId(board_id, trello_key, trello_token);
+        let list_id = get_list_Id.getListId(board_id, trello_key, trello_token);
         if (!list_id) {
             create_list.createList(trello_key, trello_token, board_id)
             list_id = get_list_Id.getListId(board_id, trello_key, trello_token);
