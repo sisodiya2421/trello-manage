@@ -22,7 +22,8 @@ exports.getBoardId = function (trello_username, trello_key, trello_token, repo_n
                     board_id = incomingData[i].id
                 }
             }
-            return board_id;
         })
         .catch(err => console.error(err));
+        
+        return board_id;
 }
