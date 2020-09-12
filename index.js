@@ -26,12 +26,14 @@ const main = async () => {
         board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
         if (!board_id) {
             create_board.createBoard(trello_key, trello_token, repo_name)
+            board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
         }
         
         // check if issues list is present or not
         list_id = get_list_Id.getListId(board_id, trello_key, trello_token);
         if (!list_id) {
             create_list.createList(trello_key, trello_token, board_id)
+            list_id = get_list_Id.getListId(board_id, trello_key, trello_token);
         }
         // adding issue to the issue list
         create_issue.createIssue(trello_key, trello_token, list_id, issue_title)
