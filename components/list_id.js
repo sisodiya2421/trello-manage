@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 // returns List id in a Board 
 exports.getListId = function (board_id, trello_key, trello_token) {
   var list_id = null;
-  fetch(`https://api.trello.com/1/boards/${board_id}/lists?key=${ trello_key }&token=${ trello_token }`, {
+  return fetch(`https://api.trello.com/1/boards/${board_id}/lists?key=${ trello_key }&token=${ trello_token }`, {
     method: 'GET'
   })
     .then(response => {
