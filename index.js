@@ -12,13 +12,13 @@ const main = async () => {
         const context = github.context;
         const payload = context.payload;
         const repo_name = core.getInput('repo-name');
+        const trello_username = core.getInput('trello-username');
         const issue_title = getIssueTitle(payload);
 
         // get environment variables
         const trello_key = process.env.TRELLO_KEY
         const trello_token = process.env.TRELLO_TOKEN
-        const trello_username = process.env.TRELLO_USERNAME
-        console.log(trello_username)
+        
         // check if board is present
         let board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
         if (!board_id) {

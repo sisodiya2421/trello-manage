@@ -4,6 +4,9 @@ inputs:
   repo-name:
     description: 'Repository name'
     required: true
+  trello-username:
+    description: 'Username of Trello Account'
+    required: true
 runs:
   using: 'node12'
   main: 'index.js'
