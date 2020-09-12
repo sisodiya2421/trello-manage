@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 var board_id = null
 // get board id
-export function getBoardId(trello_username, trello_key, trello_token) {
+exports.getBoardId = function (trello_username, trello_key, trello_token) {
     fetch(`https://api.trello.com/1/members/${trello_username}/boards?key=${trello_key}&token=${trello_token}`, {
         method: 'GET',
         headers: {

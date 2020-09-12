@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 // create board
-export function createBoard(trello_key, trello_token, repo_name) {
+exports.createBoard = function (trello_key, trello_token, repo_name) {
   fetch(`https://api.trello.com/1/boards/?key=${trello_key}&token=${trello_token}&name=${repo_name}`, {
     method: 'POST'
   })

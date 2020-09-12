@@ -1,8 +1,8 @@
-import { createBoard } from './components/board_create';
-import { createList } from './components/list_create';
-import { createIssue } from './components/issue_create';
-import { getBoardId } from './components/board_id';
-import { getListId } from './components/list_id';
+var create_board = require('./components/board_create');
+var create_list = require('./components/list_create');
+var create_issue = require('./components/issue_create');
+var get_board_id = require('./components/board_id');
+var get_list_Id = require('./components/list_id');
 
 const core = require('@actions/core');
 const github = require('@actions/github');
@@ -23,18 +23,18 @@ const main = async () => {
         var list_id = null
 
         // check if board is present
-        board_id = getBoardId(trello_username, trello_key, trello_token);
+        board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token);
         if (!board_id) {
-            createBoard(trello_key, trello_token, repo_name)
+            create_board.createBoard(trello_key, trello_token, repo_name)
         }
         
         // check if issues list is present or not
-        list_id = getListId(board_id, trello_key, trello_token);
+        list_id = get_list_Id.getListId(board_id, trello_key, trello_token);
         if (!list_id) {
-            createList(trello_key, trello_token, board_id)
+            create_list.createList(trello_key, trello_token, board_id)
         }
         // adding issue to the issue list
-        createIssue(trello_key, trello_token, list_id, issue_title)
+        create_issue.createIssue(trello_key, trello_token, list_id, issue_title)
 
     } catch (error) {
     core.setFailed(error.message);
