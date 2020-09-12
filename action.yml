@@ -1,5 +1,9 @@
 name: 'Trello Manage'
 description: 'Creates lists of issues in Trello'
+inputs:
+  repo-name:
+    description: 'Repository name'
+    required: true
 runs:
   using: 'node12'
   main: 'index.js'
