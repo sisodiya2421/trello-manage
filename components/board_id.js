@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 // get board id
-const getBoardId = function (trello_username, trello_key, trello_token, repo_name) {
+const getBoardId = async function (trello_username, trello_key, trello_token, repo_name) {
     var board_id = null;
     fetch(`https://api.trello.com/1/members/${trello_username}/boards?key=${trello_key}&token=${trello_token}`, {
         method: 'GET',
