@@ -11,7 +11,7 @@ const main = async () => {
     try {
         const context = github.context;
         const payload = context.payload;
-        const repo_name = github.repository;
+        const repo_name = context.repository;
         const issue_title = getIssueTitle(payload);
 
         // get environment variables
