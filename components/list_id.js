@@ -15,7 +15,7 @@ exports.getListId = function (board_id, trello_key, trello_token) {
     .then(text => {
       incomingData = JSON.parse(text)
       for (var i = 0; i < incomingData.length; i++) {
-          if ('issues' === incomingData[i].name) {
+          if ('Issues' === incomingData[i].name) {
               list_id = incomingData[i].id
           }
         }
