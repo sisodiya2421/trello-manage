@@ -2,8 +2,7 @@ const fetch = require('node-fetch');
 
 // get board id
 const getBoardId = async function (trello_username, trello_key, trello_token, repo_name) {
-    var board_id = null;
-    fetch(`https://api.trello.com/1/members/${trello_username}/boards?key=${trello_key}&token=${trello_token}`, {
+    const board_id = await fetch(`https://api.trello.com/1/members/${trello_username}/boards?key=${trello_key}&token=${trello_token}`, {
         method: 'GET',
         headers: {
             'Accept': 'application/json'
@@ -22,9 +21,9 @@ const getBoardId = async function (trello_username, trello_key, trello_token, re
                     board_id = incomingData[i].id
                 }
             }
-            return board_id;
         })
         .catch(err => console.error(err));
+    return board_id;
 }
 
 exports.getBoardId = getBoardId;
