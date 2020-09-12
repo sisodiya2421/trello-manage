@@ -1,83 +1,51 @@
 import { createBoard } from './components/board_create';
 import { createList } from './components/list_create';
 import { createIssue } from './components/issue_create';
+import { getBoardId } from './components/board_id';
+import { getListId } from './components/list_id';
 
 const core = require('@actions/core');
 const github = require('@actions/github');
 
 const main = async () => {
-try {
-    // get environment variables
-    const trello_key = process.env.TRELLO_KEY
-    const trello_token = process.env.TRELLO_TOKEN
-    const trello_username = process.env.TRELLO_USERNAME
-    const repo_name = github.repository
-    var board_id = ''
-    var list_id = ''
+    try {
+        const context = github.context;
+        const payload = context.payload;
+        const repo_name = github.repository;
+        const issue_title = getIssueTitle(payload);
 
-    // check if board is present
-    fetch(`https://api.trello.com/1/members/${trello_username}/boards?key=${trello_key}&token=${trello_token}`, {
-        method: 'GET',
-        headers: {
-        'Accept': 'application/json'
+        // get environment variables
+        const trello_key = process.env.TRELLO_KEY
+        const trello_token = process.env.TRELLO_TOKEN
+        const trello_username = process.env.TRELLO_USERNAME
+        
+        var board_id = null
+        var list_id = null
+
+        // check if board is present
+        board_id = getBoardId(trello_username, trello_key, trello_token);
+        if (!board_id) {
+            createBoard(trello_key, trello_token, repo_name)
         }
-    })
-    .then(response => {
-        console.log(
-            `Response: ${response.status} ${response.statusText}`
-            );
-            return response.text();
-        })
-    .then(text => {
-        incomingData = JSON.parse(text)
-        for (var i = 0; i < incomingData.length; i++) {
-            if (repo_name === incomingData[i].name) {
-
-                //get board id if board is already present 
-                board_id = incomingData[i].id
-
-            }
+        
+        // check if issues list is present or not
+        list_id = getListId(board_id, trello_key, trello_token);
+        if (!list_id) {
+            createList(trello_key, trello_token, board_id)
         }
-        if (board_id === ''){
-            createBoard();
+        // adding issue to the issue list
+        createIssue(trello_key, trello_token, list_id, issue_title)
+
+    } catch (error) {
+    core.setFailed(error.message);
+    }
+    };
+
+    function getIssueTitle(payload) {
+        if (payload.issue && payload.issue.title) {
+        return payload.issue.title;
         }
-    })
-    .catch(err => console.error(err));
-    
-    
-    // check is issues list is present or not
-    fetch(`https://api.trello.com/1/boards/${board_id}/lists?key=${ trello_key }&token=${ trello_token }`, {
-        method: 'GET'
-    })
-    .then(response => {
-        console.log(
-            `Response: ${response.status} ${response.statusText}`
-            );
-            return response.text();
-        })
-    .then(text => {
-        incomingData = JSON.parse(text)
-        for (var i = 0; i < incomingData.length; i++) {
-            if ('issues' === incomingData[i].name) {
+    }
 
-                // get list id
-                list_id = incomingData[i].id
-                console.log(incomingData[i].id)
-            }
-        }
-        if (list_id === ''){
-            createList();
-        }
-    })
-    .catch(err => console.error(err));
-
-
-    // adding issue to the issue list
-    createIssue()
-
-} catch (error) {
-  core.setFailed(error.message);
-}
-};
 
 main();

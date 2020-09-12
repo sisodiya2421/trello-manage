@@ -1,10 +1,7 @@
 const fetch = require('node-fetch');
 
-const trello_key = process.env.TRELLO_KEY
-const trello_token = process.env.TRELLO_TOKEN
-const board_id = ''
 
-export function createList() {
+export function createList(trello_key, trello_token, board_id) {
 // create list with name issues
 fetch(`https://api.trello.com/1/lists?key=${trello_key}&token=${trello_token}&name=issues&idBoard=${board_id}`, {
         method: 'POST'
@@ -15,6 +12,6 @@ fetch(`https://api.trello.com/1/lists?key=${trello_key}&token=${trello_token}&na
             );
             return response.text();
         })
-        .then(text => console.log(text))
+        .then(console.log(`issue List created.`))
         .catch(err => console.error(err));
 }
