@@ -18,7 +18,7 @@ const main = async () => {
         const trello_key = process.env.TRELLO_KEY
         const trello_token = process.env.TRELLO_TOKEN
         const trello_username = process.env.TRELLO_USERNAME
-
+        console.log(trello_username)
         // check if board is present
         let board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
         if (!board_id) {
