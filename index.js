@@ -21,19 +21,20 @@ const main = async () => {
         
         // check if board is present
         let board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
-        if (!board_id) {
-            create_board.createBoard(trello_key, trello_token, repo_name)
-            board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
-        }
+        console.log(`printing ${board_id}`)
+        // if (!board_id) {
+        //     create_board.createBoard(trello_key, trello_token, repo_name)
+        //     board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
+        // }
         
-        // check if issues list is present or not
-        let list_id = get_list_Id.getListId(board_id, trello_key, trello_token);
-        if (!list_id) {
-            create_list.createList(trello_key, trello_token, board_id)
-            list_id = get_list_Id.getListId(board_id, trello_key, trello_token);
-        }
-        // adding issue to the issue list
-        create_issue.createIssue(trello_key, trello_token, list_id, issue_title)
+        // // check if issues list is present or not
+        // let list_id = get_list_Id.getListId(board_id, trello_key, trello_token);
+        // if (!list_id) {
+        //     create_list.createList(trello_key, trello_token, board_id)
+        //     list_id = get_list_Id.getListId(board_id, trello_key, trello_token);
+        // }
+        // // adding issue to the issue list
+        // create_issue.createIssue(trello_key, trello_token, list_id, issue_title)
 
     } catch (error) {
     core.setFailed(error.message);
