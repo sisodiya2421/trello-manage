@@ -19,9 +19,11 @@ const main = async () => {
         const trello_key = process.env.TRELLO_KEY
         const trello_token = process.env.TRELLO_TOKEN
         
+        let board_id = null;
         // check if board is present
-        let board_id = await get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
-        console.log(`printing ${board_id}`)
+        get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name).then(board_id => {
+            console.log(`printing ${board_id}`)
+        });
         // if (!board_id) {
         //     create_board.createBoard(trello_key, trello_token, repo_name)
         //     board_id = get_board_id.getBoardId(trello_username, trello_key, trello_token, repo_name);
