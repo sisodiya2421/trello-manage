@@ -4,6 +4,7 @@ var create_issue = require('./components/issue_create');
 var get_board_id = require('./components/board_id');
 var get_list_Id = require('./components/list_id');
 var create_label = require('./components/create_label');
+var labels_on_board = require('./components/labels_on_board');
 
 const core = require('@actions/core');
 const github = require('@actions/github');
@@ -16,9 +17,6 @@ const main = async () => {
         const trello_username = core.getInput('trello-username');
         const issue_title = getIssueTitle(payload);
         const issue_labels = getIssueLabels(payload);
-        const issue_body = getIssueBody(payload);
-        console.log(issue_body);
-        console.log(issue_labels);
 
         // get environment variables
         const trello_key = process.env.TRELLO_KEY
@@ -55,8 +53,23 @@ const main = async () => {
             await create_list.createList(trello_key, trello_token, board_id)
             list_id = await get_list_Id.getListId(board_id, trello_key, trello_token);
         }
+
+        // segregating labels that need to be assigned
+        var labels_Ids_From_Trello = [];
+        if (!issue_labels) {
+            const labelsFromTrello = await labels_on_board.labelsOnBoard(board_id, trello_key, trello_token);
+            labelsFromTrello.forEach(element => {
+                for (var i = 0; i<issue_labels.length; i++) {
+                  if (element.name === issue_labels[i]) {
+                    labels_Ids_From_Trello.push(element.id);
+                  }
+                }
+              });
+        }
+        
+
         // adding issue to the issue list
-        await create_issue.createIssue(trello_key, trello_token, list_id, issue_title)
+        await create_issue.createIssue(trello_key, trello_token, list_id, issue_title, labels_Ids_From_Trello);
 
     } catch (error) {
     core.setFailed(error.message);
@@ -69,15 +82,17 @@ const main = async () => {
         }
     }
 
-    function getIssueBody(payload) {
-        if (payload.issue && payload.issue.body) {
-            return payload.issue.body
-        }
-    }
-
     function getIssueLabels(payload) {
+        let labels = [];
         if (payload.issue && payload.issue.labels) {
-            return payload.issue.labels
+            incomingData = JSON.parse(payload.issue.labels);
+            for (var i = 0; i<incomingData.length;i++) {
+                labels.push(incomingData[i].name);
+            }
+            return labels;
+        }
+        else {
+            return null;
         }
     }
 
