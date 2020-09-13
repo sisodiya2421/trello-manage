@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 
-
 // create an issue card
 exports.createIssue = function (trello_key, trello_token, list_id, issue_title, label_ids) {
   if (label_ids.length > 0) {

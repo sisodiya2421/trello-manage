@@ -1,5 +1,3 @@
-// This code sample uses the 'node-fetch' library:
-// https://www.npmjs.com/package/node-fetch
 const fetch = require('node-fetch');
 
 exports.labelsOnBoard = function (board_id, trello_key, trello_token) {
