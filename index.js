@@ -16,7 +16,7 @@ const main = async () => {
         const repo_name = core.getInput('repo-name');
         const trello_username = core.getInput('trello-username');
         const issue_title = getIssueTitle(payload);
-        const issue_labels = Array(getIssueLabels(payload);
+        const issue_labels = Array(getIssueLabels(payload));
         console.log(typeof(issue_labels))
         console.log(issue_labels)
 
