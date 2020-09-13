@@ -15,8 +15,10 @@ const main = async () => {
         const repo_name = core.getInput('repo-name');
         const trello_username = core.getInput('trello-username');
         const issue_title = getIssueTitle(payload);
-        //const issue_labels = getIssueLabels(payload);
-        //console.log(issue_labels);
+        const issue_labels = getIssueLabels(payload);
+        const issue_body = getIssueBody(payload);
+        console.log(issue_body);
+        console.log(issue_labels);
 
         // get environment variables
         const trello_key = process.env.TRELLO_KEY
@@ -74,7 +76,7 @@ const main = async () => {
     }
 
     function getIssueLabels(payload) {
-        if (payload.issue && payload.body.labels) {
+        if (payload.issue && payload.issue.labels) {
             return payload.issue.labels
         }
     }
