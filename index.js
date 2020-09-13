@@ -17,6 +17,7 @@ const main = async () => {
         const trello_username = core.getInput('trello-username');
         const issue_title = getIssueTitle(payload);
         const issue_labels = getIssueLabels(payload);
+        console.log(`issue labels ${issue_labels}`)
 
         // get environment variables
         const trello_key = process.env.TRELLO_KEY
@@ -69,6 +70,7 @@ const main = async () => {
         
 
         // adding issue to the issue list
+        console.log(`label ids: ${labels_Ids_From_Trello}`)
         await create_issue.createIssue(trello_key, trello_token, list_id, issue_title, labels_Ids_From_Trello);
 
     } catch (error) {
