@@ -17,7 +17,7 @@ exports.createIssue = function (trello_key, trello_token, list_id, issue_title, 
       .catch(err => console.error(err));
   }
   else {
-    return fetch(`https://api.trello.com/1/cards?key=${trello_key}&token=${trello_token}&idList=${list_id}&name=${issue_title}&idLabels=${label_ids}`, {
+    return fetch(`https://api.trello.com/1/cards?key=${trello_key}&token=${trello_token}&idList=${list_id}&name=${issue_title}`, {
       method: 'POST'
     })
       .then(response => {
