@@ -17,7 +17,7 @@ const main = async () => {
         const trello_username = core.getInput('trello-username');
         const issue_title = getIssueTitle(payload);
         const issue_labels = getIssueLabels(payload);
-        console.log(`issue labels ${issue_labels}`)
+        console.log(typeof(issue_labels))
 
         // get environment variables
         const trello_key = process.env.TRELLO_KEY
