@@ -85,7 +85,7 @@ const main = async () => {
     function getIssueLabels(payload) {
         let labels = [];
         if (payload.issue && payload.issue.labels) {
-            incomingData = JSON.parse(payload.issue.labels);
+            incomingData = (payload.issue.labels);
             for (var i = 0; i<incomingData.length;i++) {
                 labels.push(incomingData[i].name);
             }
