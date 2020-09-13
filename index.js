@@ -60,6 +60,7 @@ const main = async () => {
         var labels_Ids_From_Trello = [];
         if (!issue_labels) {
             const labelsFromTrello = await labels_on_board.labelsOnBoard(board_id, trello_key, trello_token);
+            console.log(labelsFromTrello)
             labelsFromTrello.forEach(element => {
                 for (var i = 0; i<issue_labels.length; i++) {
                   if (element.name === issue_labels[i]) {
